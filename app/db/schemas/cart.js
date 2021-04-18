@@ -2,16 +2,15 @@
  * @typedef {object} Cart
  * @property {string} [_id]
  * @property {CartItem[]} [items]
- * @property {number} [createdAt]
- * @property {number} [modifiedAt]
+ * @property {string} [createdAt]
+ * @property {string} [modifiedAt]
  */
 
 /**
  * @typedef {object} CartItem
  * @property {string} [_id]
  * @property {string} [productid]
- * @property {number} [createdAt]
- * @property {number} [modifiedAt]
+ * @property {string} [createdAt]
  */
 
 /**
@@ -22,4 +21,13 @@ module.exports = {
     items: [],
     createdAt: undefined,
     modifiedAt: undefined
+};
+
+/**
+ * @type {CartItem}
+ */
+module.exports.CartItemSchema = {
+    _id: undefined,
+    productid: undefined,
+    createdAt: undefined
 };

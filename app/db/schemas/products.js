@@ -4,8 +4,8 @@
  * @property {string} [name]
  * @property {string} [description]
  * @property {number} [price]
- * @property {number} [createdAt]
- * @property {number} [modifiedAt]
+ * @property {string} [createdAt]
+ * @property {string} [modifiedAt]
  */
 
 /**

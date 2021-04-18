@@ -2,11 +2,11 @@
  * @typedef {object} Orders
  * @property {string} [_id]
  * @property {string} [userid]
- * @property {number} [status]
+ * @property {string} [status]
  * @property {number} [total]
  * @property {OrderItem[]} [items]
- * @property {number} [createdAt]
- * @property {number} [modifiedAt]
+ * @property {string} [createdAt]
+ * @property {string} [modifiedAt]
  */
 
 /**
@@ -15,8 +15,8 @@
  * @property {string} [productid]
  * @property {number} [quantity]
  * @property {number} [price]
- * @property {number} [createdAt]
- * @property {number} [modifiedAt]
+ * @property {string} [createdAt]
+ * @property {string} [modifiedAt]
  */
 
 /**
@@ -28,6 +28,18 @@ module.exports = {
     status: undefined,
     total: undefined,
     items: [],
+    createdAt: undefined,
+    modifiedAt: undefined
+};
+
+/**
+ * @type {OrderItem}
+ */
+module.exports.OrderItemSchema = {
+    _id: undefined,
+    productid: undefined,
+    quantity: undefined,
+    price: undefined,
     createdAt: undefined,
     modifiedAt: undefined
 };

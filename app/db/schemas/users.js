@@ -5,8 +5,8 @@
  * @property {string} [password]
  * @property {string} [firstname]
  * @property {string} [lastname]
- * @property {number} [createdAt]
- * @property {number} [modifiedAt]
+ * @property {string} [createdAt]
+ * @property {string} [modifiedAt]
  */
 
 /**

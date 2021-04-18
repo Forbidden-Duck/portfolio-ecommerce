@@ -1,4 +1,5 @@
 const mongodb = require("mongodb");
+const crypto = require("crypto");
 
 /**
  * @typedef {Object} Mongo
@@ -62,6 +63,11 @@ module.exports = class MongoDB {
         };
     }
 
+    static createID() {
+        const randomNumber = Math.floor(Math.random() * 999999);
+        const currentTime = new Date().getTime();
+        return crypto.createHash("sha256").update((randomNumber + currentTime).toString()).digest("hex");
+    }
 
     getCollection(name) {
         return this.db.collection(name);

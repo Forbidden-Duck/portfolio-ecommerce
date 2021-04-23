@@ -30,6 +30,10 @@ module.exports = async () => {
  * @property {Mongo} client
  * @property {object} services
  * @property {AuthService} services.auth
+ * @property {UserService} services.user
+ * @property {ProductService} services.product
+ * @property {OrderService} services.order
+ * @property {CartService} services.cart
  */
 
 /**

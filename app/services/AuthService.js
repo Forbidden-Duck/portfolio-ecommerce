@@ -6,10 +6,11 @@ const Mongo = require("../db");
 module.exports = class AuthService {
     /**
      * @param {Mongo} MongoDB 
+     * @param {UserService} UserSVC
      */
-    constructor(MongoDB) {
+    constructor(MongoDB, UserSVC) {
         this.MongoDB = MongoDB;
-        this.UserService = new UserService(this.MongoDB);
+        this.UserService = UserSVC
     }
 
     /**

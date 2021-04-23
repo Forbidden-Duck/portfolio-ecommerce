@@ -1,5 +1,7 @@
 const mongodb = require("mongodb");
 const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
 
 /**
  * @typedef {Object} Mongo
@@ -25,12 +27,12 @@ module.exports = class MongoDB {
             this.url =
                 `mongodb://${this.mongo.host}/`;
         }
-        this.schemas = {
-            users: require("./schemas/users"),
-            products: require("./schemas/products"),
-            orders: require("./schemas/orders"),
-            carts: require("./schemas/carts")
-        };
+
+        // Requires all schemas
+        const schemasFileName = fs.readdirSync(__dirname + "/schemas");
+        schemasFileName.forEach(file => {
+            this.schemas[path.parse(file).name] = require("./schemas/" + file);
+        });
 
         return async () => {
             try {
@@ -44,18 +46,12 @@ module.exports = class MongoDB {
 
                 this.db = this.client.db(this.mongo.name);
                 const collections = await this.db.collections();
-                if (collections.find(coll => coll.collectionName === "users") == undefined) {
-                    this.db.createCollection("users");
-                }
-                if (collections.find(coll => coll.collectionName === "products") == undefined) {
-                    this.db.createCollection("products");
-                }
-                if (collections.find(coll => coll.collectionName === "orders") == undefined) {
-                    this.db.createCollection("orders");
-                }
-                if (collections.find(coll => coll.collectionName === "carts") == undefined) {
-                    this.db.createCollection("carts");
-                }
+                // Create a collection for every schema
+                Object.keys(this.schemas).forEach(schemaName => {
+                    if (collections.find(coll => coll.collectionName === schemaName) == undefined) {
+                        this.db.createCollection(schemaName);
+                    }
+                });
             } catch (err) {
                 console.error(err);
             }

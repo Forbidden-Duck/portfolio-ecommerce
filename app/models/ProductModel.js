@@ -7,7 +7,7 @@ module.exports = class ProductModel {
      * @param {ProductSchema} data Product data
      */
     constructor(data) {
-        this._id = data.id || createID();
+        this._id = data._id || createID();
         this.name = data.name || "";
         this.description = data.description || "";
         this.price = data.price || 0;

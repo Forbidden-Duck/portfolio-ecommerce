@@ -1,8 +1,15 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const AuthService = require("../services/AuthService")();
+const { MongoService } = require("./mongodb");
 
+/**
+ * @param {*} app 
+ * @param {MongoService} MongoDB 
+ * @returns 
+ */
 module.exports = (app, MongoDB) => {
+    const AuthService = MongoDB.services.auth;
+
     app.use(passport.initialize());
     app.use(passport.session());
 
@@ -13,9 +20,9 @@ module.exports = (app, MongoDB) => {
         done(null, { id });
     });
     passport.use(new LocalStrategy(
-        async (username, password, done) => {
+        async (email, password, done) => {
             try {
-                const user = await AuthService.login(MongoDB, { email: username, password });
+                const user = await AuthService.login({ email, password });
                 return done(null, user);
             } catch (err) {
                 return done(err);

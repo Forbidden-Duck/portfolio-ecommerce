@@ -22,8 +22,6 @@ You can use various HTTP clients such as [Postman](https://www.postman.com/) or 
 ## Resources
 - [REST Architecture](https://www.codecademy.com/articles/what-is-rest)
 - [Setting up Postman](https://learning.postman.com/docs/getting-started/settings/)
-- [Using pgAdmin](https://www.pgadmin.org/docs/pgadmin4/development/getting_started.html)
-- [Postgres Cheat Sheet](https://www.postgresqltutorial.com/postgresql-cheat-sheet/)
 - [Documenting your API with Swagger](https://swagger.io/resources/articles/documenting-apis-with-swagger/)
 
 ## Options for Extension

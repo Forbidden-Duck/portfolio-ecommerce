@@ -29,7 +29,7 @@ module.exports = class MongoDB {
             users: require("./schemas/users"),
             products: require("./schemas/products"),
             orders: require("./schemas/orders"),
-            cart: require("./schemas/cart")
+            carts: require("./schemas/carts")
         };
 
         return async () => {
@@ -53,8 +53,8 @@ module.exports = class MongoDB {
                 if (collections.find(coll => coll.collectionName === "orders") == undefined) {
                     this.db.createCollection("orders");
                 }
-                if (collections.find(coll => coll.collectionName === "cart") == undefined) {
-                    this.db.createCollection("cart");
+                if (collections.find(coll => coll.collectionName === "carts") == undefined) {
+                    this.db.createCollection("carts");
                 }
             } catch (err) {
                 console.error(err);

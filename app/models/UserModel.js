@@ -7,7 +7,7 @@ module.exports = class UserModel {
      * @param {UserSchema} data User data
      */
     constructor(data) {
-        this._id = data.id || createID();
+        this._id = data._id || createID();
         this.email = data.email || "";
         this.password = data.password || "";
         this.firstname = data.firstname || "";

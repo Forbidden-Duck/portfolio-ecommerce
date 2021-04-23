@@ -64,15 +64,24 @@ module.exports = class OrderModel {
     }
 
     /**
-     * @returns {Orders}
+     * @returns {OrderSchema}
      */
     toOrderSchema() {
+        const items = [];
+        const itemsStored = this.items;
+        for (const item of itemsStored) {
+            if (item instanceof OrderItemModel) {
+                items.push(item.toOrderItemSchema());
+            } else {
+                items.push(item);
+            }
+        }
         return {
             _id: this._id,
             userid: this.userid,
             status: this.status,
             total: this.total,
-            items: this.items,
+            items: items,
             createdAt: this.createdAt,
             modifiedAt: this.modifiedAt
         };

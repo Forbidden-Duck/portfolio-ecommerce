@@ -20,8 +20,8 @@ module.exports = class AuthService {
      */
     async register(model) {
         // Check if user already exists
-        const user = this.UserService.find({ email: model.email });
-        if (user == null) {
+        const user = await this.UserService.find({ email: model.email });
+        if (user != null) {
             throw createError(409, "Email already in use");
         }
 
@@ -38,7 +38,7 @@ module.exports = class AuthService {
      */
     async login(data) {
         // Find and check user
-        const user = this.UserService.find({ email: data.email });
+        const user = await this.UserService.find({ email: data.email });
         if (user == null) {
             throw createError(404, "User not found");
         }

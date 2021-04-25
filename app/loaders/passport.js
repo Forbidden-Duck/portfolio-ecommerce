@@ -14,10 +14,10 @@ module.exports = (app, MongoDB) => {
     app.use(passport.session());
 
     passport.serializeUser((user, done) => {
-        done(null, user.id);
+        done(null, user._id);
     });
-    passport.deserializeUser((id, done) => {
-        done(null, { id });
+    passport.deserializeUser((_id, done) => {
+        done(null, { _id });
     });
     passport.use(new LocalStrategy(
         async (email, password, done) => {
@@ -27,7 +27,7 @@ module.exports = (app, MongoDB) => {
             } catch (err) {
                 return done(err);
             }
-        };
+        }
     ));
-    return passport
+    return passport;
 };

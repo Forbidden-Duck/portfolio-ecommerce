@@ -7,12 +7,12 @@ module.exports = class ProductModel {
      * @param {ProductSchema} data Product data
      */
     constructor(data) {
-        this._id = data._id || createID();
-        this.name = data.name || "";
-        this.description = data.description || "";
-        this.price = data.price || 0;
-        this.createdAt = data.createdAt || moment.utc().toISOString();
-        this.modifiedAt = data.modifiedAt || "0";
+        this.__id = data._id || createID();
+        this._name = data.name || "";
+        this._description = data.description || "";
+        this._price = data.price || 0;
+        this._createdAt = data.createdAt || moment.utc().toISOString();
+        this._modifiedAt = data.modifiedAt || "0";
     }
 
     /**
@@ -20,7 +20,7 @@ module.exports = class ProductModel {
      * @returns {string} UTC ISO String
      */
     modified() {
-        this.modifiedAt = moment.utc().toISOString();
+        this._modifiedAt = moment.utc().toISOString();
     }
 
     /**
@@ -28,12 +28,12 @@ module.exports = class ProductModel {
      */
     toProductSchema() {
         return {
-            _id: this._id,
-            name: this.name,
-            description: this.description,
-            price: this.price,
-            createdAt: this.createdAt,
-            modifiedAt: this.modifiedAt
+            _id: this.__id,
+            name: this._name,
+            description: this._description,
+            price: this._price,
+            createdAt: this._createdAt,
+            modifiedAt: this._modifiedAt
         };
     }
 
@@ -46,13 +46,13 @@ module.exports = class ProductModel {
      */
     updateProduct(data) {
         if (data.name) {
-            this.name = data.name;
+            this._name = data.name;
         }
         if (data.description) {
-            this.description = data.description;
+            this._description = data.description;
         }
         if (data.price) {
-            this.price = data.price;
+            this._price = data.price;
         }
     }
 
@@ -60,52 +60,52 @@ module.exports = class ProductModel {
      * @returns {string} Product's ID
      */
     get _id() {
-        return this._id;
+        return this.__id;
     }
 
     /**
      * @returns {string}
      */
     get name() {
-        return this.name;
+        return this._name;
     }
 
     /**
      * @returns {string}
      */
     get description() {
-        return this.description;
+        return this._description;
     }
 
     /**
      * @returns {number}
      */
     get price() {
-        return this.price;
+        return this._price;
     }
 
     /**
      * @returns {string}
      */
     get createdAt() {
-        return this.createdAt;
+        return this._createdAt;
     }
 
     /**
      * @returns {string}
      */
     get modifiedAt() {
-        return this.modifiedAt;
+        return this._modifiedAt;
     }
 
     /**
      * @param {string} newName
      */
     set name(newName) {
-        if (this.name === newName) {
+        if (this._name === newName) {
             return;
         }
-        this.name = newName;
+        this._name = newName;
         this.modified();
     }
 
@@ -113,10 +113,10 @@ module.exports = class ProductModel {
      * @param {string} newDescription
      */
     set description(newDescription) {
-        if (this.description === newDescription) {
+        if (this._description === newDescription) {
             return;
         }
-        this.description = newDescription;
+        this._description = newDescription;
         this.modified();
     }
 
@@ -124,10 +124,10 @@ module.exports = class ProductModel {
      * @param {number} newPrice
      */
     set price(newPrice) {
-        if (this.price === newPrice) {
+        if (this._price === newPrice) {
             return;
         }
-        this.price = newPrice;
+        this._price = newPrice;
         this.modified();
     }
 };

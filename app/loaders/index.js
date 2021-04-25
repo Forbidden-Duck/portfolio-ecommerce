@@ -1,7 +1,7 @@
 const expressLoader = require("./express");
 const mongodbLoader = require("./mongodb");
 const passportLoader = require("./passport");
-const routeLoader = require("../routes");
+const routeLoader = require("./routes");
 const swaggerLoader = require('./swagger');
 
 module.exports = async app => {
@@ -11,7 +11,8 @@ module.exports = async app => {
     await routeLoader(app, passport, MongoDB);
     await swaggerLoader(app);
     app.use((err, req, res, next) => {
-        const { message, status } = err;
+        let { message, status } = err;
+        status = status || 503;
         return res.status(status).send({ message });
     });
 };

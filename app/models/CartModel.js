@@ -19,11 +19,11 @@ module.exports = class CartModel {
      * @param {Cart} data Cart data
      */
     constructor(data) {
-        this._id = data._id || createID();
-        this.userid = data.userid || null;
-        this.items = data.items || [];
-        this.createdAt = data.createdAt || moment.utc().toISOString();
-        this.modifiedAt = data.modifiedAt || "0";
+        this.__id = data._id || createID();
+        this._userid = data.userid || null;
+        this._items = data.items || [];
+        this._createdAt = data.createdAt || moment.utc().toISOString();
+        this._modifiedAt = data.modifiedAt || "0";
     }
 
     /**
@@ -31,7 +31,7 @@ module.exports = class CartModel {
      * @returns {string} UTC ISO String
      */
     modified() {
-        this.modifiedAt = moment.utc().toISOString();
+        this._modifiedAt = moment.utc().toISOString();
     }
 
     /**
@@ -39,7 +39,7 @@ module.exports = class CartModel {
      * @param {CartItemModel} item
      */
     addItem(item) {
-        this.items.push(item);
+        this._items.push(item);
         this.modified();
     }
 
@@ -49,9 +49,9 @@ module.exports = class CartModel {
      * @returns {boolean} If the item exists
      */
     removeItem(item) {
-        const itemIndex = this.items.findIndex(e => e._id === item._id);
+        const itemIndex = this._items.findIndex(e => e._id === item._id);
         if (itemIndex > -1) {
-            this.items = this.items.filter(e => e._id !== item._id);
+            this._items = this._items.filter(e => e._id !== item._id);
             this.modified();
             return true;
         } else {
@@ -64,7 +64,7 @@ module.exports = class CartModel {
      */
     toCartSchema() {
         const items = [];
-        const itemsStored = this.items;
+        const itemsStored = this._items;
         for (const item of itemsStored) {
             if (item instanceof CartItemModel) {
                 items.push(item.toCartItemSchema());
@@ -73,11 +73,11 @@ module.exports = class CartModel {
             }
         }
         return {
-            _id: this._id,
-            userid: this.userid,
-            items: this.items,
-            createdAt: this.createdAt,
-            modifiedAt: this.modifiedAt
+            _id: this.__id,
+            userid: this._userid,
+            items: this._items,
+            createdAt: this._createdAt,
+            modifiedAt: this._modifiedAt
         };
     }
 
@@ -85,45 +85,45 @@ module.exports = class CartModel {
      * @returns {string} Order's ID
      */
     get _id() {
-        return this._id;
+        return this.__id;
     }
 
     /**
      * @returns {string}
      */
     get userid() {
-        return this.userid;
+        return this._userid;
     }
 
     /**
      * @returns {CartItemModel[]}
      */
     get items() {
-        return this.items;
+        return this._items;
     }
 
     /**
      * @returns {string}
      */
     get createdAt() {
-        return this.createdAt;
+        return this._createdAt;
     }
 
     /**
      * @returns {string}
      */
     get modifiedAt() {
-        return this.modifiedAt;
+        return this._modifiedAt;
     }
 
     /**
      * @param {CartItemModel[]} newItems
      */
     set items(newItems) {
-        if (this.items === newItems) {
+        if (this._items === newItems) {
             return;
         }
-        this.items = newItems;
+        this._items = newItems;
         this.modified();
     }
 };

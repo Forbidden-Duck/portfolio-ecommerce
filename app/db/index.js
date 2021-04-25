@@ -28,6 +28,7 @@ module.exports = class MongoDB {
                 `mongodb://${this.mongo.host}/`;
         }
 
+        this.schemas = {};
         // Requires all schemas
         const schemasFileName = fs.readdirSync(__dirname + "/schemas");
         schemasFileName.forEach(file => {

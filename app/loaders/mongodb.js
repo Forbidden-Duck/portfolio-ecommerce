@@ -1,5 +1,5 @@
 const Mongo = require("../db");
-const DB = require("../../config");
+const { DB } = require("../../config");
 
 const AuthService = require("../services/AuthService");
 const UserService = require("../services/UserService");

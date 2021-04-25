@@ -7,13 +7,13 @@ module.exports = class UserModel {
      * @param {UserSchema} data User data
      */
     constructor(data) {
-        this._id = data._id || createID();
-        this.email = data.email || "";
-        this.password = data.password || "";
-        this.firstname = data.firstname || "";
-        this.lastname = data.lastname || "";
-        this.createdAt = data.createdAt || moment.utc().toISOString();
-        this.modifiedAt = data.modifiedAt || "0";
+        this.__id = data._id || createID();
+        this._email = data.email || data.username || "";
+        this._password = data.password || "";
+        this._firstname = data.firstname || "";
+        this._lastname = data.lastname || "";
+        this._createdAt = data.createdAt || moment.utc().toISOString();
+        this._modifiedAt = data.modifiedAt || "0";
     }
 
     /**
@@ -21,14 +21,14 @@ module.exports = class UserModel {
      * @returns {string} UTC ISO String
      */
     modified() {
-        this.modifiedAt = moment.utc().toISOString();
+        this._modifiedAt = moment.utc().toISOString();
     }
 
     /**
      * @returns {string}
      */
     fullname() {
-        return `${this.firstname} ${this.lastname}`;
+        return `${this._firstname} ${this._lastname}`;
     }
 
     /**
@@ -36,13 +36,13 @@ module.exports = class UserModel {
      */
     toUserSchema() {
         return {
-            _id: this._id,
-            email: this.email,
-            password: this.password,
-            firstname: this.firstname,
-            lastname: this.lastname,
-            createdAt: this.createdAt,
-            modifiedAt: this.modifiedAt
+            _id: this.__id,
+            email: this._email,
+            password: this._password,
+            firstname: this._firstname,
+            lastname: this._lastname,
+            createdAt: this._createdAt,
+            modifiedAt: this._modifiedAt
         };
     }
 
@@ -56,16 +56,16 @@ module.exports = class UserModel {
      */
     updateUser(data) {
         if (data.email) {
-            this.email = data.email;
+            this._email = data.email;
         }
         if (data.password) {
-            this.password = data.password;
+            this._password = data.password;
         }
         if (data.firstname) {
-            this.firstname = data.firstname;
+            this._firstname = data.firstname;
         }
         if (data.lastname) {
-            this.lastname = data.lastname;
+            this._lastname = data.lastname;
         }
     }
 
@@ -73,59 +73,59 @@ module.exports = class UserModel {
      * @returns {string} User's ID
      */
     get _id() {
-        return this._id;
+        return this.__id;
     }
 
     /**
      * @returns {string}
      */
     get email() {
-        return this.email;
+        return this._email;
     }
 
     /**
      * @returns {string}
      */
     get password() {
-        return this.password;
+        return this._password;
     }
 
     /**
      * @returns {string}
      */
     get firstname() {
-        return this.firstname;
+        return this._firstname;
     }
 
     /**
      * @returns {string}
      */
     get lastname() {
-        return this.lastname;
+        return this._lastname;
     }
 
     /**
      * @returns {string}
      */
     get createdAt() {
-        return this.createdAt;
+        return this._createdAt;
     }
 
     /**
      * @returns {string}
      */
     get modifiedAt() {
-        return this.modifiedAt;
+        return this._modifiedAt;
     }
 
     /**
      * @param {string} newEmail
      */
     set email(newEmail) {
-        if (this.email === newEmail) {
+        if (this._email === newEmail) {
             return;
         }
-        this.email = newEmail;
+        this._email = newEmail;
         this.modified();
     }
 
@@ -133,10 +133,10 @@ module.exports = class UserModel {
      * @param {string} newPassword
      */
     set password(newPassword) {
-        if (this.password === newPassword) {
+        if (this._password === newPassword) {
             return;
         }
-        this.password = newPassword;
+        this._password = newPassword;
         this.modified();
     }
 
@@ -144,10 +144,10 @@ module.exports = class UserModel {
      * @param {string} newFirstname
      */
     set firstname(newFirstname) {
-        if (this.firstname === newFirstname) {
+        if (this._firstname === newFirstname) {
             return;
         }
-        this.firstname = newFirstname;
+        this._firstname = newFirstname;
         this.modified();
     }
 
@@ -155,10 +155,10 @@ module.exports = class UserModel {
      * @param {string} newLastname
      */
     set lastname(newLastname) {
-        if (this.lastname === newLastname) {
+        if (this._lastname === newLastname) {
             return;
         }
-        this.lastname = newLastname;
+        this._lastname = newLastname;
         this.modified();
     }
 };

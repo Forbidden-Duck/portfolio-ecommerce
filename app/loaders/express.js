@@ -1,7 +1,7 @@
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require("express-session");
-const { SESSION_SECRET } = require("../config");
+const { SESSION_SECRET } = require("../../config");
 
 module.exports = app => {
     app.use(cors());

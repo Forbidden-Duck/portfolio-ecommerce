@@ -21,13 +21,13 @@ module.exports = class OrderModel {
      * @param {Orders} data Order data
      */
     constructor(data) {
-        this._id = data._id || createID();
-        this.userid = data.userid || null;
-        this.status = data.status || "PENDING";
-        this.total = data.total || 0;
-        this.items = data.items || [];
-        this.createdAt = data.createdAt || moment.utc().toISOString();
-        this.modifiedAt = data.modifiedAt || "0";
+        this.__id = data._id || createID();
+        this._userid = data.userid || null;
+        this._status = data.status || "PENDING";
+        this._total = data.total || 0;
+        this._items = data.items || [];
+        this._createdAt = data.createdAt || moment.utc().toISOString();
+        this._modifiedAt = data.modifiedAt || "0";
     }
 
     /**
@@ -35,7 +35,7 @@ module.exports = class OrderModel {
      * @returns {string} UTC ISO String
      */
     modified() {
-        this.modifiedAt = moment.utc().toISOString();
+        this._modifiedAt = moment.utc().toISOString();
     }
 
     /**
@@ -43,7 +43,7 @@ module.exports = class OrderModel {
      * @param {OrderItemModel} item
      */
     addItem(item) {
-        this.items.push(item);
+        this._items.push(item);
         this.modified();
     }
 
@@ -53,9 +53,9 @@ module.exports = class OrderModel {
      * @returns {boolean} If the item exists
      */
     removeItem(item) {
-        const itemIndex = this.items.findIndex(e => e._id === item._id);
+        const itemIndex = this._items.findIndex(e => e._id === item._id);
         if (itemIndex > -1) {
-            this.items = this.items.filter(e => e._id !== item._id);
+            this._items = this._items.filter(e => e._id !== item._id);
             this.modified();
             return true;
         } else {
@@ -68,7 +68,7 @@ module.exports = class OrderModel {
      */
     toOrderSchema() {
         const items = [];
-        const itemsStored = this.items;
+        const itemsStored = this._items;
         for (const item of itemsStored) {
             if (item instanceof OrderItemModel) {
                 items.push(item.toOrderItemSchema());
@@ -77,13 +77,13 @@ module.exports = class OrderModel {
             }
         }
         return {
-            _id: this._id,
-            userid: this.userid,
-            status: this.status,
-            total: this.total,
+            _id: this.__id,
+            userid: this._userid,
+            status: this._status,
+            total: this._total,
             items: items,
-            createdAt: this.createdAt,
-            modifiedAt: this.modifiedAt
+            createdAt: this._createdAt,
+            modifiedAt: this._modifiedAt
         };
     }
 
@@ -96,13 +96,13 @@ module.exports = class OrderModel {
      */
     updateOrderInformation(data) {
         if (data.status) {
-            this.status = data.status;
+            this._status = data.status;
         }
         if (data.total) {
-            this.total = data.total;
+            this._total = data.total;
         }
         if (data.items) {
-            this.items = data.items;
+            this._items = data.items;
         }
     }
 
@@ -110,59 +110,59 @@ module.exports = class OrderModel {
      * @returns {string} Order's ID
      */
     get _id() {
-        return this._id;
+        return this.__id;
     }
 
     /**
      * @returns {string}
      */
     get userid() {
-        return this.userid;
+        return this._userid;
     }
 
     /**
      * @returns {string}
      */
     get status() {
-        return this.status;
+        return this._status;
     }
 
     /**
      * @returns {number}
      */
     get total() {
-        return this.total;
+        return this._total;
     }
 
     /**
      * @returns {OrderItemModel[]}
      */
     get items() {
-        return this.items;
+        return this._items;
     }
 
     /**
      * @returns {string}
      */
     get createdAt() {
-        return this.createdAt;
+        return this._createdAt;
     }
 
     /**
      * @returns {string}
      */
     get modifiedAt() {
-        return this.modifiedAt;
+        return this._modifiedAt;
     }
 
     /**
      * @param {string} newStatus
      */
     set status(newStatus) {
-        if (this.status === newStatus) {
+        if (this._status === newStatus) {
             return;
         }
-        this.status = newStatus;
+        this._status = newStatus;
         this.modified();
     }
 
@@ -170,10 +170,10 @@ module.exports = class OrderModel {
      * @param {number} newTotal
      */
     set total(newTotal) {
-        if (this.email === newTotal) {
+        if (this._email === newTotal) {
             return;
         }
-        this.email = newTotal;
+        this._email = newTotal;
         this.modified();
     }
 
@@ -181,10 +181,10 @@ module.exports = class OrderModel {
      * @param {OrderItemModel[]} newItems
      */
     set items(newItems) {
-        if (this.items === newItems) {
+        if (this._items === newItems) {
             return;
         }
-        this.items = newItems;
+        this._items = newItems;
         this.modified();
     }
 };

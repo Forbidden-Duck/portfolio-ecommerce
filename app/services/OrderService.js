@@ -46,6 +46,7 @@ module.exports = class OrderService {
         if (order == null) {
             throw createError(404, "Order not found");
         }
+        model.modified();
 
         // Update order
         const orderToSchema = model.toOrderSchema();

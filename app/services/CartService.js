@@ -49,6 +49,7 @@ module.exports = class CartService {
         if (cart == null) {
             throw createError(404, "Cart not found");
         }
+        model.modified();
 
         // Update cart
         const cartToSchema = model.toCartSchema();

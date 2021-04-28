@@ -44,6 +44,7 @@ module.exports = class UserService {
         if (user == null) {
             throw createError(404, "User not found");
         }
+        model.modified();
 
         // Update user
         const userToSchema = model.toUserSchema();

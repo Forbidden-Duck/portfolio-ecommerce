@@ -108,7 +108,7 @@ module.exports = class OrderService {
     async listByUser(userId) {
         try {
             const orders = [];
-            const ordersFromDB = (await this.MongoDB.find("orders", { userid: userId }))[0];
+            const ordersFromDB = await this.MongoDB.find("orders", { userid: userId });
             for (const order of ordersFromDB) {
                 orders.push(this.orderItemsToModel(new OrderModel(order)));
             }

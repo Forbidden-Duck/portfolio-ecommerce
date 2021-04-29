@@ -58,7 +58,7 @@ module.exports = class ProductService {
     async findMany(data) {
         try {
             const products = [];
-            const productsFromDB = (await this.MongoDB.find("products", data));
+            const productsFromDB = await this.MongoDB.find("products", data);
             for (const product of productsFromDB) {
                 products.push(new ProductModel(product));
             }

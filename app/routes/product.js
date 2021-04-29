@@ -6,7 +6,7 @@ const { MongoService } = require("../loaders/mongodb");
 const ProductModel = require("../models/ProductModel");
 
 /**
- * @param {authRouter} app 
+ * @param {productRouter} app 
  * @param {passport} passport 
  * @param {MongoService} MongoDB 
  */

@@ -68,7 +68,7 @@ module.exports = class CartService {
      */
     async find(data) {
         try {
-            const cart = (await this.MongoDB.find("carts", data, { limit: 1 }))[0];
+            const cart = await this.MongoDB.find("carts", data, { limit: 1 });
             if (cart == undefined) {
                 return null;
             }

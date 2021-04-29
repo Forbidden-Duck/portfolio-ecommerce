@@ -6,7 +6,7 @@ const { MongoService } = require("../loaders/mongodb");
 const UserModel = require("../models/UserModel");
 
 /**
- * @param {authRouter} app 
+ * @param {userRouter} app 
  * @param {passport} passport 
  * @param {MongoService} MongoDB 
  */

@@ -1,6 +1,7 @@
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require("express-session");
+const morgan = require("morgan");
 const { SESSION_SECRET } = require("../../config");
 
 module.exports = app => {
@@ -18,5 +19,6 @@ module.exports = app => {
             maxAge: 24 * 60 * 60 * 100
         }
     }));
+    app.use(morgan("dev"));
     return app;
 };

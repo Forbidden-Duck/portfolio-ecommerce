@@ -2,6 +2,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const session = require("express-session");
 const morgan = require("morgan");
+const passport = require("passport");
 const { SESSION_SECRET } = require("../../config");
 
 module.exports = app => {
@@ -20,5 +21,7 @@ module.exports = app => {
         }
     }));
     app.use(morgan("dev"));
+    app.use(passport.initialize());
+    app.use(passport.session());
     return app;
 };

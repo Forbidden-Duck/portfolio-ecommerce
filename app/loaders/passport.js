@@ -3,15 +3,11 @@ const LocalStrategy = require("passport-local");
 const { MongoService } = require("./mongodb");
 
 /**
- * @param {*} app 
  * @param {MongoService} MongoDB 
  * @returns 
  */
-module.exports = (app, MongoDB) => {
+module.exports = MongoDB => {
     const AuthService = MongoDB.services.auth;
-
-    app.use(passport.initialize());
-    app.use(passport.session());
 
     passport.serializeUser((user, done) => {
         done(null, user._id);

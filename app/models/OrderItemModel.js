@@ -45,10 +45,10 @@ module.exports = class OrderItemModel {
      */
     updateOrderItem(data) {
         if (data.quantity) {
-            this._quantity = data.quantity;
+            this.quantity = data.quantity;
         }
         if (data.price) {
-            this._price = data.price;
+            this.price = data.price;
         }
     }
 

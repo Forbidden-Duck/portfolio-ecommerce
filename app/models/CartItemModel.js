@@ -30,7 +30,10 @@ module.exports = class CartItemModel {
         return {
             _id: this.__id,
             productid: this._productid,
-            createdAt: this._createdAt
+            quantity: this._quantity,
+            price: this._price,
+            createdAt: this._createdAt,
+            modifiedAt: this._modifiedAt
         };
     }
 
@@ -42,10 +45,10 @@ module.exports = class CartItemModel {
      */
     updateCartItem(data) {
         if (data.quantity) {
-            this._quantity = data.quantity;
+            this.quantity = data.quantity;
         }
         if (data.price) {
-            this._price = data.price;
+            this.price = data.price;
         }
     }
 

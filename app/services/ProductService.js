@@ -22,13 +22,13 @@ module.exports = class ProductService {
         try {
             await this.MongoDB.insert("products", model._id, productToSchema);
         } catch (err) {
-            throw createError(503, err.message);
+            throw createError(500, err.message);
         }
 
         // Check if product exists
         const product = await this.find({ _id: model._id });
         if (product == null) {
-            throw createError(503, "Could not create product");
+            throw createError(500, "Could not create product");
         }
         return product;
     }
@@ -64,7 +64,7 @@ module.exports = class ProductService {
             }
             return products;
         } catch (err) {
-            throw createError(503, err.message);
+            throw createError(500, err.message);
         }
     }
 }

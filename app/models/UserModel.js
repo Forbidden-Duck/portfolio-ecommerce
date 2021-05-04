@@ -56,16 +56,16 @@ module.exports = class UserModel {
      */
     updateUser(data) {
         if (data.email) {
-            this._email = data.email;
+            this.email = data.email;
         }
         if (data.password) {
-            this._password = data.password;
+            this.password = data.password;
         }
         if (data.firstname) {
-            this._firstname = data.firstname;
+            this.firstname = data.firstname;
         }
         if (data.lastname) {
-            this._lastname = data.lastname;
+            this.lastname = data.lastname;
         }
     }
 

@@ -10,9 +10,9 @@
 /**
  * @typedef {object} CartItem
  * @property {string} [_id]
+ * @property {string} [productid]
  * @property {number} [quantity]
  * @property {number} [price]
- * @property {string} [productid]
  * @property {string} [createdAt]
  * @property {string} [modifiedAt]
  */
@@ -33,9 +33,9 @@ module.exports = {
  */
 module.exports.CartItemSchema = {
     _id: undefined,
+    productid: undefined,
     quantity: undefined,
     price: undefined,
-    productid: undefined,
     createdAt: undefined,
     modifiedAt: undefined
 };

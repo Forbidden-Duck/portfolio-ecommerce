@@ -46,13 +46,13 @@ module.exports = class ProductModel {
      */
     updateProduct(data) {
         if (data.name) {
-            this._name = data.name;
+            this.name = data.name;
         }
         if (data.description) {
-            this._description = data.description;
+            this.description = data.description;
         }
         if (data.price) {
-            this._price = data.price;
+            this.price = data.price;
         }
     }
 

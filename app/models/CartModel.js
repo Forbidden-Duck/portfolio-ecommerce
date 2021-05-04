@@ -39,7 +39,7 @@ module.exports = class CartModel {
      * @param {CartItemModel} item
      */
     addItem(item) {
-        this._items.push(item);
+        this.items.push(item);
         this.modified();
     }
 
@@ -49,9 +49,9 @@ module.exports = class CartModel {
      * @returns {boolean} If the item exists
      */
     removeItem(item) {
-        const itemIndex = this._items.findIndex(e => e._id === item._id);
+        const itemIndex = this.items.findIndex(e => e._id === item._id);
         if (itemIndex > -1) {
-            this._items = this._items.filter(e => e._id !== item._id);
+            this.items = this.items.filter(e => e._id !== item._id);
             this.modified();
             return true;
         } else {
@@ -64,7 +64,7 @@ module.exports = class CartModel {
      */
     toCartSchema() {
         const items = [];
-        const itemsStored = this._items;
+        const itemsStored = this.items;
         for (const item of itemsStored) {
             if (item instanceof CartItemModel) {
                 items.push(item.toCartItemSchema());
@@ -75,10 +75,21 @@ module.exports = class CartModel {
         return {
             _id: this.__id,
             userid: this._userid,
-            items: this._items,
+            items: items,
             createdAt: this._createdAt,
             modifiedAt: this._modifiedAt
         };
+    }
+
+    /**
+     * Update cart information
+     * @param {object} data New cart data
+     * @param {CartItemModel[]} [data.items]
+     */
+    updateCartInformation(data) {
+        if (data.items) {
+            this.items = data.items;
+        }
     }
 
     /**

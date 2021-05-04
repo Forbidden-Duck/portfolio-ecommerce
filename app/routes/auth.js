@@ -15,12 +15,11 @@ module.exports = (app, passport, MongoDB) => {
 
     const validateUser = (req, res, next) => {
         const user = req.body;
-        console.log(user)
         if (typeof user.username !== "string"
             || typeof user.password !== "string") {
             return res.sendStatus(400);
         }
-        req.body = new UserModel(user);
+        req.parsedUser = new UserModel(user);
         next();
     };
 
@@ -29,9 +28,9 @@ module.exports = (app, passport, MongoDB) => {
             /**
              * @type {UserModel}
              */
-            const user = req.body;
+            const user = req.parsedUser;
             const response = await MongoDB.services.auth.register(user);
-            res.status(200).send(response.toUserSchema());
+            res.status(201).send(response.toUserSchema());
         } catch (err) {
             next(err);
         }

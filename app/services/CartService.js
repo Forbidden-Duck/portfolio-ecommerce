@@ -27,13 +27,13 @@ module.exports = class CartService {
         try {
             await this.MongoDB.insert("carts", model._id, cartToSchema);
         } catch (err) {
-            throw createError(503, err.message);
+            throw createError(500, err.message);
         }
 
         // Check cart exists
         const cart = await this.find({ _id: model._id });
         if (cart == null) {
-            throw createError(503, "Could not create cart");
+            throw createError(500, "Could not create cart");
         }
         return cart;
     }
@@ -56,7 +56,7 @@ module.exports = class CartService {
         try {
             await this.MongoDB.update("carts", { _id: model._id }, { $set: cartToSchema });
         } catch (err) {
-            throw createError(503, err.message);
+            throw createError(500, err.message);
         }
         return model;
     }
@@ -68,7 +68,7 @@ module.exports = class CartService {
      */
     async find(data) {
         try {
-            const cart = await this.MongoDB.find("carts", data, { limit: 1 });
+            const cart = (await this.MongoDB.find("carts", data, { limit: 1 }))[0];
             if (cart == undefined) {
                 return null;
             }
@@ -92,9 +92,9 @@ module.exports = class CartService {
         }
 
         // Find the cart item on that cart
-        const item = order.items.find(cartItem => {
+        const item = cart.items.find(cartItem => {
             for (const [key, value] of Object.entries(data)) {
-                if (orderItem[key] !== value) {
+                if (cartItem[key] !== value) {
                     return false;
                 }
             }
@@ -126,12 +126,15 @@ module.exports = class CartService {
             });
 
             // Make the charge
+            const charge = "Not available";
+            /*
             const charge = await stripe.charges.create({
                 amount: total,
                 currency: "usd",
                 source: paymentInfo.id,
                 description: "Codecademy Charge"
             });
+            */
 
             order.status = "COMPLETED";
             return {
@@ -139,7 +142,7 @@ module.exports = class CartService {
                 charge: charge
             };
         } catch (err) {
-            throw createError(503, err.message);
+            throw createError(500, err.message);
         }
     }
 
@@ -149,12 +152,16 @@ module.exports = class CartService {
      * @returns {CartModel} 
      */
     cartItemsToModel(model) {
-        const itemsModel = [];
-        const items = model.items;
-        for (const item of items) {
-            itemsModel.push(new CartItemModel(item));
+        const items = [];
+        const itemsStored = model.items;
+        for (const item of itemsStored) {
+            if (item instanceof CartItemModel) {
+                items.push(item.toCartItemSchema());
+            } else {
+                items.push(item);
+            }
         }
-        model.items = items;
+        model._items = items;
         return model;
     }
 
@@ -165,9 +172,13 @@ module.exports = class CartService {
      */
     cartItemsToOrderItems(model) {
         const orderItems = [];
-        const items = model.items;
-        for (const item of items) {
-            orderItems.push(new OrderItemModel(item.toCartItemSchema()));
+        const cartItems = model.items;
+        for (const item of cartItems) {
+            if (item instanceof CartItemModel) {
+                orderItems.push(new OrderItemModel(item.toCartItemSchema()));
+            } else {
+                orderItems.push(new OrderItemModel(item));
+            }
         }
         return orderItems;
     }

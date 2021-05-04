@@ -12,7 +12,7 @@ module.exports = async app => {
     await swaggerLoader(app);
     app.use((err, req, res, next) => {
         let { message, status } = err;
-        status = status || 503;
+        status = status || 500;
         return res.status(status).send({ message });
     });
 };

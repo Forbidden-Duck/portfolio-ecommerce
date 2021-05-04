@@ -43,7 +43,7 @@ module.exports = class OrderModel {
      * @param {OrderItemModel} item
      */
     addItem(item) {
-        this._items.push(item);
+        this.items.push(item);
         this.modified();
     }
 
@@ -53,9 +53,9 @@ module.exports = class OrderModel {
      * @returns {boolean} If the item exists
      */
     removeItem(item) {
-        const itemIndex = this._items.findIndex(e => e._id === item._id);
+        const itemIndex = this.items.findIndex(e => e._id === item._id);
         if (itemIndex > -1) {
-            this._items = this._items.filter(e => e._id !== item._id);
+            this.items = this.items.filter(e => e._id !== item._id);
             this.modified();
             return true;
         } else {
@@ -96,13 +96,13 @@ module.exports = class OrderModel {
      */
     updateOrderInformation(data) {
         if (data.status) {
-            this._status = data.status;
+            this.status = data.status;
         }
         if (data.total) {
-            this._total = data.total;
+            this.total = data.total;
         }
         if (data.items) {
-            this._items = data.items;
+            this.items = data.items;
         }
     }
 

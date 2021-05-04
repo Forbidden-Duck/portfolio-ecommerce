@@ -24,13 +24,13 @@ module.exports = class OrderService {
         try {
             await this.MongoDB.insert("orders", model._id, orderToSchema);
         } catch (err) {
-            throw createError(503, err.message);
+            throw createError(500, err.message);
         }
 
         // Check order exists
         const order = await this.find({ _id: model._id });
-        if (user == null) {
-            throw createError(503, "Could not create order");
+        if (order == null) {
+            throw createError(500, "Could not create order");
         }
         return order;
     }
@@ -53,7 +53,7 @@ module.exports = class OrderService {
         try {
             await this.MongoDB.update("orders", { _id: model._id }, { $set: orderToSchema });
         } catch (err) {
-            throw createError(503, err.message);
+            throw createError(500, err.message);
         }
         return model;
     }
@@ -114,7 +114,7 @@ module.exports = class OrderService {
             }
             return orders;
         } catch (err) {
-            throw createError(503, err.message);
+            throw createError(500, err.message);
         }
     }
 
@@ -124,12 +124,16 @@ module.exports = class OrderService {
      * @returns {OrderModel}
      */
     orderItemsToModel(model) {
-        const itemsModel = [];
-        const items = model.items;
-        for (const item of items) {
-            itemsModel.push(new OrderItemModel(item));
+        const items = [];
+        const itemsStored = model.items;
+        for (const item of itemsStored) {
+            if (item instanceof OrderItemModel) {
+                items.push(item.toOrderItemSchema());
+            } else {
+                items.push(item);
+            }
         }
-        model.items = items;
+        model._items = items;
         return model;
     }
 }

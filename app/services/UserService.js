@@ -22,13 +22,13 @@ module.exports = class UserService {
         try {
             await this.MongoDB.insert("users", model._id, userToSchema);
         } catch (err) {
-            throw createError(503, err.message);
+            throw createError(500, err.message);
         }
 
         // Check user exists
         const user = await this.find({ _id: model._id });
         if (user == null) {
-            throw createError(503, "Could not create user");
+            throw createError(500, "Could not create user");
         }
         return user;
     }
@@ -51,7 +51,7 @@ module.exports = class UserService {
         try {
             await this.MongoDB.update("users", { _id: model._id }, { $set: userToSchema });
         } catch (err) {
-            throw createError(503, err.message);
+            throw createError(500, err.message);
         }
         return model;
     }

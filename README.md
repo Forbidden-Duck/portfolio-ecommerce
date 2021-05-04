@@ -1,6 +1,11 @@
 # codecademy-ecommerce-rest-api
 Node/Express REST API to provide typical functionality found in an ecommerce website.  Users can create accounts, view products, add products to a cart, and place/view orders.
 
+**Note**:
+This is an adaption of the code provided by Codecademy. The solution codecademy provided was not at all clean or what I would expect from a company to produce. This was more learning different tools (Swagger, Passport, Express Sessions).
+However, the solution provided doesn't work nor did the code for blocking unwanted requests from users who haven't used /login.
+I don't know either, because they didn't exactly explain anything.
+
 ## Running the app
 To run locally, `npm install`, then `npm run start`
 

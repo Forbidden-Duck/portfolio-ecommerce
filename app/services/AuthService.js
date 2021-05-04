@@ -40,11 +40,11 @@ module.exports = class AuthService {
         // Find and check user
         const user = await this.UserService.find({ email: data.email });
         if (user == null) {
-            throw createError(404, "User not found");
+            throw createError(401, "Incorrect username or password");
         }
 
         // Compare login credentials
-        if (data.password === user.password) {
+        if (data.password !== user.password) {
             throw createError(401, "Incorrect username or password");
         }
         return user;
